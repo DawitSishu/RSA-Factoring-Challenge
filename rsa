@@ -1,36 +1,35 @@
 #!/usr/bin/env bash
-
-
+#is a nice challenge
 check_factor()
 {
 	if [ $# -ne 3 ];
         then
-                given__args=("$@")
-                counter=0
-                number=1
-                for a in ${given__args[*]};
+                args=("$@")
+                count=0
+                num2=1
+                for a in ${args[*]};
                 do
-                        if [ $counter -gt 1 ];
+                        if [ $count -gt 1 ];
                         then
-                                number=$(echo $a*$number | bc)
+                                num2=$(echo $a*$num2 | bc)
                         fi
-                        counter=$((counter + 1))
+                        count=$((count + 1))
                 done
         else
-                number=$3
+                num2=$3
         fi
 
-        otherNum=$2
+        num1=$2
         num=$(echo "$1" | tr ':' '=')
 
-        final=$(echo "if($number > $otherNum) 1 else 0" | bc)
-	        if ((final == 1)); then
-		        numcp=$otherNum
-		        otherNum=$number
-		        number=$numcp
+        result=$(echo "if($num2 > $num1) 1 else 0" | bc)
+	        if ((result == 1)); then
+		        numcp=$num1
+		        num1=$num2
+		        num2=$numcp
                 fi
 
-        echo "$num$otherNum*$number"
+        echo "$num$num1*$num2"
 }
 
 if [ $# -ne 1 ]
@@ -42,8 +41,8 @@ else
         while read i
         do
 
-                final=$(factor "$i")
-                check_factor $final
+                result=$(factor "$i")
+                check_factor $result
 
         done < "$1"
 fi
