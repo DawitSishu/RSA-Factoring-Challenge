@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <file>"
+    exit 1
+fi
+
+file="$1"
+
+while read -r number; do
+    factors=""
+    for ((i = 2; i <= number / 2; i++)); do
+        if ((number % i == 0)); then
+            factors="$i*$(($number / $i))"
+            break
+        fi
+    done
+
+    if [ -n "$factors" ]; then
+        echo "$number=$factors"
+    else
+        echo "$number is prime"
+    fi
+done < "$file"
